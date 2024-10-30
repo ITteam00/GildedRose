@@ -24,30 +24,11 @@ namespace GildedRose
         {
             if (item.Name == "Aged Brie")
             {
-                UpdateQualityforAged(item);
+                UpdateQualityForAged(item);
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-
-                if (item.Quality < MaxQuality)
-                {
-                    item.Quality = item.Quality + 1;
-
-                    if (item.SellIn < 11)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-
-                    if (item.SellIn < 6)
-                    {
-                        item.Quality = item.Quality + 1;
-
-                    }
-                }
-                if (item.SellIn < 0)
-                {
-                    item.Quality = item.Quality - item.Quality;
-                }
+                UpdateQualityForBackstage(item);
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
@@ -68,7 +49,30 @@ namespace GildedRose
 
         }
 
-        private static void UpdateQualityforAged(Item item)
+        private static void UpdateQualityForBackstage(Item item)
+        {
+            if (item.Quality < MaxQuality)
+            {
+                item.Quality = item.Quality + 1;
+
+                if (item.SellIn < 11)
+                {
+                    item.Quality = item.Quality + 1;
+                }
+
+                if (item.SellIn < 6)
+                {
+                    item.Quality = item.Quality + 1;
+
+                }
+            }
+            if (item.SellIn < 0)
+            {
+                item.Quality = item.Quality - item.Quality;
+            }
+        }
+
+        private static void UpdateQualityForAged(Item item)
         {
             if (item.Quality >= MaxQuality) return;
             item.Quality = item.Quality + 1;
