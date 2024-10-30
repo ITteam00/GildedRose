@@ -66,6 +66,10 @@ namespace GildedRose
                 if (item.Quality > MinQuality)
                 {
                     item.Quality = item.Quality - 1;
+                    if (item.SellIn < 0)
+                    {
+                        item.Quality = item.Quality - 1;
+                    }
                 }
             }
 
@@ -75,23 +79,6 @@ namespace GildedRose
             else
             {
                 item.SellIn = item.SellIn - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > MinQuality)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                }
             }
         }
     }
