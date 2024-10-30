@@ -134,5 +134,83 @@ namespace GildedRoseTest
             Assert.Equal(-1, items[0].SellIn);
             Assert.Equal(8, items[0].Quality);
         }
+
+        [Fact]
+        public void TestAgedBrieQualityIncreases()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(1, items[0].SellIn);
+            Assert.Equal(1, items[0].Quality);
+        }
+
+        [Fact]
+        public void TestAgedBrieQualityIncreasesAfterSellIn()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Aged Brie", SellIn = 0, Quality = 10 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(-1, items[0].SellIn);
+            Assert.Equal(12, items[0].Quality);
+        }
+
+        [Fact]
+        public void TestBackstagePassesQualityIncreases()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(14, items[0].SellIn);
+            Assert.Equal(21, items[0].Quality);
+        }
+
+        [Fact]
+        public void TestBackstagePassesQualityIncreasesCloseToConcert()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 49 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(9, items[0].SellIn);
+            Assert.Equal(50, items[0].Quality);
+        }
+
+        [Fact]
+        public void TestBackstagePassesQualityIncreasesVeryCloseToConcert()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 49 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(4, items[0].SellIn);
+            Assert.Equal(50, items[0].Quality);
+        }
+
+        [Fact]
+        public void TestBackstagePassesQualityDropsAfterConcert()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 20 }
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+            Assert.Equal(-1, items[0].SellIn);
+            Assert.Equal(0, items[0].Quality);
+        }
     }
 }
