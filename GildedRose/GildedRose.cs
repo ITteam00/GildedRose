@@ -97,14 +97,16 @@ namespace GildedRose
                 if (item.Quality < 50)
                 {
                     item.Quality++;
-                    if (item.SellIn < 11 && item.Quality < 50)
-                    {
-                        item.Quality++;
-                    }
-                    if (item.SellIn < 6 && item.Quality < 50)
-                    {
-                        item.Quality++;
-                    }
+                    IncreaseQualityIfSellInLessThan(item, 11);
+                    IncreaseQualityIfSellInLessThan(item, 6);
+                }
+            }
+
+            private void IncreaseQualityIfSellInLessThan(Item item, int threshold)
+            {
+                if (item.SellIn < threshold && item.Quality < 50)
+                {
+                    item.Quality++;
                 }
             }
 
