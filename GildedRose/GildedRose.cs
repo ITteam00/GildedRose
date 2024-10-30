@@ -5,94 +5,120 @@ namespace GildedRose
     public class GildedRose
     {
         private IList<Item> items;
+        private Dictionary<string, IItemUpdater> updaters;
         public GildedRose(IList<Item> items)
         {
             this.items = items;
+            updaters = new Dictionary<string, IItemUpdater>
+            {
+                { "+5 Dexterity Vest", new NormalItemUpdater() },
+                { "Aged Brie", new AgedBrieUpdater() },
+                { "Elixir of the Mongoose", new NormalItemUpdater() },
+                { "Backstage passes to a TAFKAL80ETC concert", new BackstagePassUpdater() }
+            };
         }
 
         public void UpdateQuality()
         {
             foreach (var item in items)
             {
-                UpdateItemQuality(item);
-                UpdateItemSellIn(item);
-                HandleExpiredItem(item);
-            }
-        }
-
-        private void UpdateItemQuality(Item item)
-        {
-            if (IsSpecialItem(item))
-            {
-                IncreaseQuality(item);
-                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Name == "Sulfuras, Hand of Ragnaros")
                 {
-                    UpdateBackstagePassQuality(item);
+                    continue; 
+                }
+                if (updaters.ContainsKey(item.Name))
+                {
+                    updaters[item.Name].UpdateQuality(item);
+                    updaters[item.Name].UpdateSellIn(item);
+                    updaters[item.Name].HandleExpired(item);
                 }
             }
-            else
-            {
-                DecreaseQuality(item);
-            }
         }
 
-        private void UpdateItemSellIn(Item item)
+        public interface IItemUpdater
         {
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
+            void UpdateQuality(Item item);
+            void UpdateSellIn(Item item);
+            void HandleExpired(Item item);
+        }
+
+        public class NormalItemUpdater : IItemUpdater
+        {
+            public void UpdateQuality(Item item)
+            {
+                if (item.Quality > 0)
+                {
+                    item.Quality--;
+                }
+            }
+
+            public void UpdateSellIn(Item item)
             {
                 item.SellIn--;
             }
+
+            public void HandleExpired(Item item)
+            {
+                if (item.SellIn < 0 && item.Quality > 0)
+                {
+                    item.Quality--;
+                }
+            }
         }
 
-        private void HandleExpiredItem(Item item)
+        public class AgedBrieUpdater : IItemUpdater
         {
-            if (item.SellIn < 0)
+            public void UpdateQuality(Item item)
             {
-                if (item.Name == "Aged Brie")
+                if (item.Quality < 50)
                 {
-                    IncreaseQuality(item);
+                    item.Quality++;
                 }
-                else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            }
+
+            public void UpdateSellIn(Item item)
+            {
+                item.SellIn--;
+            }
+
+            public void HandleExpired(Item item)
+            {
+                if (item.SellIn < 0 && item.Quality < 50)
+                {
+                    item.Quality++;
+                }
+            }
+        }
+
+        public class BackstagePassUpdater : IItemUpdater
+        {
+            public void UpdateQuality(Item item)
+            {
+                if (item.Quality < 50)
+                {
+                    item.Quality++;
+                    if (item.SellIn < 11 && item.Quality < 50)
+                    {
+                        item.Quality++;
+                    }
+                    if (item.SellIn < 6 && item.Quality < 50)
+                    {
+                        item.Quality++;
+                    }
+                }
+            }
+
+            public void UpdateSellIn(Item item)
+            {
+                item.SellIn--;
+            }
+
+            public void HandleExpired(Item item)
+            {
+                if (item.SellIn < 0)
                 {
                     item.Quality = 0;
                 }
-                else
-                {
-                    DecreaseQuality(item);
-                }
-            }
-        }
-
-        private bool IsSpecialItem(Item item)
-        {
-            return item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert";
-        }
-
-        private void IncreaseQuality(Item item)
-        {
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-            }
-        }
-
-        private void DecreaseQuality(Item item)
-        {
-            if (item.Quality > 0 && item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.Quality--;
-            }
-        }
-
-        private void UpdateBackstagePassQuality(Item item)
-        {
-            if (item.SellIn < 11)
-            {
-                IncreaseQuality(item);
-            }
-            if (item.SellIn < 6)
-            {
-                IncreaseQuality(item);
             }
         }
 
