@@ -22,17 +22,7 @@ namespace GildedRose
 
         public void UpdateItem(Item item)
         {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
-            {
-                if (item.Quality > MinQuality)
-                {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-            }
-            else
+            if (item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (item.Quality < MaxQuality)
                 {
@@ -58,36 +48,53 @@ namespace GildedRose
                     }
                 }
             }
+            else
+            {
+                if (item.Quality > MinQuality)
+                {
+                    if (item.Name == "Sulfuras, Hand of Ragnaros")
+                    {
+                    }
+                    else
+                    {
+                        item.Quality = item.Quality - 1;
+                    }
+                }
+            }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
+            if (item.Name == "Sulfuras, Hand of Ragnaros")
+            {
+            }
+            else
             {
                 item.SellIn = item.SellIn - 1;
             }
 
             if (item.SellIn < 0)
             {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > MinQuality)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
-                }
-                else
+                if (item.Name == "Aged Brie")
                 {
                     if (item.Quality < MaxQuality)
                     {
                         item.Quality = item.Quality + 1;
+                    }
+                }
+                else
+                {
+                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                    {
+                        item.Quality = item.Quality - item.Quality;
+                    }
+                    else
+                    {
+                        if (item.Quality > MinQuality)
+                        {
+                            if (item.Name == "Sulfuras, Hand of Ragnaros")
+                            {
+                                return;
+                            }
+                            item.Quality = item.Quality - 1;
+                        }
                     }
                 }
             }
