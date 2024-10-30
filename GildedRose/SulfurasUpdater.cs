@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GildedRose
 {
-    internal static class SulfurasUpdater
+    internal class SulfurasUpdater : IItemUpdater
     {
-        public static void UpdateQualityForSulfuras(Item item)
+        public void UpdateItem(Item item)
         {
         }
     }

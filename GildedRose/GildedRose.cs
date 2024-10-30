@@ -7,7 +7,7 @@ namespace GildedRose
         private IList<Item> items;
         private AgedUpdater agedUpdater = new AgedUpdater();
         private BackstageUpdater backstageUpdater = new BackstageUpdater();
-
+        private SulfurasUpdater sulfurasUpdater =new SulfurasUpdater();
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -33,7 +33,7 @@ namespace GildedRose
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
-                SulfurasUpdater.UpdateQualityForSulfuras(item);
+                sulfurasUpdater.UpdateItem(item);
             }
             else
             {
