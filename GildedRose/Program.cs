@@ -35,7 +35,7 @@ namespace GildedRoseNamespace
             };
 
             var app = new GildedRose(items);
-            string result = app.GetFormattedText(items);
+            string result = app.GetFormattedText();
             Console.WriteLine(result);
         }
     }

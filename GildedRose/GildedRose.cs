@@ -1,108 +1,126 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GildedRoseNamespace
 {
+    public interface IUpdateStrategy
+    {
+        void Update(Item item);
+    }
+
+    public class NormalItemUpdateStrategy : IUpdateStrategy
+    {
+        public void Update(Item item)
+        {
+            if (item.Quality > 0)
+            {
+                item.Quality--;
+            }
+            item.SellIn--;
+            if (item.SellIn < 0 && item.Quality > 0)
+            {
+                item.Quality--;
+            }
+        }
+    }
+
+    public class AgedBrieUpdateStrategy : IUpdateStrategy
+    {
+        public void Update(Item item)
+        {
+            if (item.Quality < 50)
+            {
+                item.Quality++;
+            }
+            item.SellIn--;
+            if (item.SellIn < 0 && item.Quality < 50)
+            {
+                item.Quality++;
+            }
+        }
+    }
+
+    public class BackstagePassUpdateStrategy : IUpdateStrategy
+    {
+        public void Update(Item item)
+        {
+            if (item.Quality < 50)
+            {
+                item.Quality++;
+                if (item.SellIn < 11 && item.Quality < 50)
+                {
+                    item.Quality++;
+                }
+                if (item.SellIn < 6 && item.Quality < 50)
+                {
+                    item.Quality++;
+                }
+            }
+            item.SellIn--;
+            if (item.SellIn < 0)
+            {
+                item.Quality = 0;
+            }
+        }
+    }
+
+    public class SulfurasUpdateStrategy : IUpdateStrategy
+    {
+        public void Update(Item item)
+        {
+            // Sulfuras does not change
+        }
+    }
+
     public class GildedRose
     {
         private IList<Item> items;
+        private Dictionary<string, IUpdateStrategy> strategies;
+
         public GildedRose(IList<Item> items)
         {
             this.items = items;
+            strategies = new Dictionary<string, IUpdateStrategy>
+            {
+                { "Aged Brie", new AgedBrieUpdateStrategy() },
+                { "Backstage passes to a TAFKAL80ETC concert", new BackstagePassUpdateStrategy() },
+                { "Sulfuras, Hand of Ragnaros", new SulfurasUpdateStrategy() }
+            };
         }
 
-        public string GetFormattedText(IList<Item> items)
+        public string GetFormattedText()
         {
-            List<string> outputStrArray = ["OMGHAI!"];
+            List<string> outputStrArray = new List<string> { "OMGHAI!" };
 
             for (var i = 0; i < 31; i++)
             {
                 outputStrArray.Add("-------- day " + i + " --------");
                 outputStrArray.Add("name, sellIn, quality");
-                for (var j = 0; j < items.Count; j++)
+                foreach (var item in items)
                 {
-                    outputStrArray.Add(items[j].Name + ", " + items[j].SellIn + ", " + items[j].Quality);
+                    outputStrArray.Add($"{item.Name}, {item.SellIn}, {item.Quality}");
                 }
                 outputStrArray.Add(string.Empty);
                 UpdateQuality();
             }
-            string outputStr = string.Join("\n", outputStrArray).Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
-            return outputStr;
+            return string.Join(Environment.NewLine, outputStrArray);
         }
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < items.Count; i++)
+            foreach (var item in items)
             {
-                if (items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (strategies.ContainsKey(item.Name))
                 {
-                    if (items[i].Quality > 0)
-                    {
-                        if (items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            items[i].Quality = items[i].Quality - 1;
-                        }
-                    }
+                    strategies[item.Name].Update(item);
                 }
                 else
                 {
-                    if (items[i].Quality < 50)
-                    {
-                        items[i].Quality = items[i].Quality + 1;
-
-                        if (items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (items[i].SellIn < 11)
-                            {
-                                if (items[i].Quality < 50)
-                                {
-                                    items[i].Quality = items[i].Quality + 1;
-                                }
-                            }
-
-                            if (items[i].SellIn < 6)
-                            {
-                                if (items[i].Quality < 50)
-                                {
-                                    items[i].Quality = items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    items[i].SellIn = items[i].SellIn - 1;
-                }
-
-                if (items[i].SellIn < 0)
-                {
-                    if (items[i].Name != "Aged Brie")
-                    {
-                        if (items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                        {
-                            if (items[i].Quality > 0)
-                            {
-                                if (items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    items[i].Quality = items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            items[i].Quality = items[i].Quality - items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (items[i].Quality < 50)
-                        {
-                            items[i].Quality = items[i].Quality + 1;
-                        }
-                    }
+                    new NormalItemUpdateStrategy().Update(item);
                 }
             }
         }
     }
+
+
 }
