@@ -147,6 +147,18 @@ namespace GildedRoseTest
             Assert.Equal(0, dummyItem.Quality);
         }
 
+        [Fact]
+        public void Should_add_quality_when_item_is_Sulfuras_and_item_quality_bigger_than_min_quality()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 10, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(20, dummyItem.Quality);
+        }
+
 
 
     }
