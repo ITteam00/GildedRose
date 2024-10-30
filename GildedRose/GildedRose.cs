@@ -30,7 +30,7 @@ namespace GildedRose
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
-                UpdateQualityForSulfuras(item);
+                SulfurasUpdater.UpdateQualityForSulfuras(item);
             }
             else
             {
@@ -38,9 +38,6 @@ namespace GildedRose
             }
             DecreaseSellIn(item);
 
-        }
-        private static void UpdateQualityForSulfuras(Item item) {
-        
         }
 
         private static void DecreaseSellIn(Item item)
