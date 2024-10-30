@@ -1,9 +1,9 @@
 ﻿namespace GildedRose
 {
-    internal static class BackstageUpdater
+    internal class BackstageUpdater : IItemUpdater
     {
         private const int MaxQuality = 50;
-        public static void UpdateQualityForBackstage(Item item)
+        public void UpdateItem(Item item)
         {
             if (item.Quality >= MaxQuality) return;
 

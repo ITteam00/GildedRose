@@ -6,6 +6,8 @@ namespace GildedRose
     {
         private IList<Item> items;
         private AgedUpdater agedUpdater = new AgedUpdater();
+        private BackstageUpdater backstageUpdater = new BackstageUpdater();
+
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -27,7 +29,7 @@ namespace GildedRose
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                BackstageUpdater.UpdateQualityForBackstage(item);
+                backstageUpdater.UpdateItem(item);
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
