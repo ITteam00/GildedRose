@@ -24,15 +24,7 @@ namespace GildedRose
         {
             if (item.Name == "Aged Brie")
             {
-                if (item.Quality < MaxQuality)
-                {
-                    item.Quality = item.Quality + 1;
-                    if (item.SellIn < 0)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-
-                }
+                UpdateQualityforAged(item);
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
@@ -73,6 +65,16 @@ namespace GildedRose
                 }
             }
             DecreaseSellIn(item);
+
+        }
+
+        private static void UpdateQualityforAged(Item item)
+        {
+            if (item.Quality >= MaxQuality) return;
+            item.Quality = item.Quality + 1;
+
+            if (item.SellIn >= 0) return;
+            item.Quality = item.Quality + 1;
 
         }
 
