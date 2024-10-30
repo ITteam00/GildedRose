@@ -1,9 +1,9 @@
 ﻿namespace GildedRose
 {
-    internal static class OtherItemUpdater
+    internal class OtherItemUpdater : IItemUpdater
     {
         private const int MinQuality = 0;
-        public static void UpdateQualityForOtherItem(Item item)
+        public void UpdateItem(Item item)
         {
             if (item.Quality <= MinQuality) return;
             item.Quality = item.Quality - 1;

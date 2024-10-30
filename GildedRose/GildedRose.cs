@@ -8,6 +8,7 @@ namespace GildedRose
         private AgedUpdater agedUpdater = new AgedUpdater();
         private BackstageUpdater backstageUpdater = new BackstageUpdater();
         private SulfurasUpdater sulfurasUpdater =new SulfurasUpdater();
+        private OtherItemUpdater otherItemUpdater = new OtherItemUpdater();
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -37,7 +38,7 @@ namespace GildedRose
             }
             else
             {
-                OtherItemUpdater.UpdateQualityForOtherItem(item);
+                otherItemUpdater.UpdateItem(item);
             }
             DecreaseSellIn(item);
 
