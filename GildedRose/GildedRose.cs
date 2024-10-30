@@ -51,20 +51,19 @@ namespace GildedRose
 
         private static void UpdateQualityForBackstage(Item item)
         {
-            if (item.Quality < MaxQuality)
+            if (item.Quality >= MaxQuality) return;
+
+            item.Quality = item.Quality + 1;
+
+            if (item.SellIn < 11)
+            {
+                item.Quality = item.Quality + 1;
+            }
+
+            if (item.SellIn < 6)
             {
                 item.Quality = item.Quality + 1;
 
-                if (item.SellIn < 11)
-                {
-                    item.Quality = item.Quality + 1;
-                }
-
-                if (item.SellIn < 6)
-                {
-                    item.Quality = item.Quality + 1;
-
-                }
             }
             if (item.SellIn < 0)
             {
