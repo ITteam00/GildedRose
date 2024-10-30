@@ -100,6 +100,18 @@ namespace GildedRoseTest
         }
 
         [Fact]
+        public void Should_add_quality_when_item_is_aged_brie_and_item_quality_less_than_max_quality_and_SellIn_less_than_0()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Aged Brie", SellIn = -1, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(22, dummyItem.Quality);
+        }
+
+        [Fact]
         public void Should_add_quality_when_item_is_Backstage_and_item_quality_less_than_max_quality_and_SellIn_less_than_eleven()
         {
             IList<Item> items = new List<Item> { };
