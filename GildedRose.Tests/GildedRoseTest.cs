@@ -171,6 +171,18 @@ namespace GildedRoseTest
             Assert.Equal(20, dummyItem.Quality);
         }
 
+        [Fact]
+        public void Should_add_quality_when_item_is_Elixir_and_item_quality_bigger_than_min_quality_and_sellin_less_than_0()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Elixir of the Mongoose", SellIn = -1, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(18, dummyItem.Quality);
+        }
+
 
     }
 }
