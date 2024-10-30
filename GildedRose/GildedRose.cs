@@ -10,14 +10,17 @@ namespace GildedRoseNamespace
 
     public class NormalItemUpdateStrategy : IUpdateStrategy
     {
+        private const int MaxQuality = 50;
+        private const int MinQuality = 0;
+
         public void Update(Item item)
         {
-            if (item.Quality > 0)
+            if (item.Quality > MinQuality)
             {
                 item.Quality--;
             }
             item.SellIn--;
-            if (item.SellIn < 0 && item.Quality > 0)
+            if (item.SellIn < 0 && item.Quality > MinQuality)
             {
                 item.Quality--;
             }
@@ -26,14 +29,16 @@ namespace GildedRoseNamespace
 
     public class AgedBrieUpdateStrategy : IUpdateStrategy
     {
+        private const int MaxQuality = 50;
+
         public void Update(Item item)
         {
-            if (item.Quality < 50)
+            if (item.Quality < MaxQuality)
             {
                 item.Quality++;
             }
             item.SellIn--;
-            if (item.SellIn < 0 && item.Quality < 50)
+            if (item.SellIn < 0 && item.Quality < MaxQuality)
             {
                 item.Quality++;
             }
@@ -42,16 +47,19 @@ namespace GildedRoseNamespace
 
     public class BackstagePassUpdateStrategy : IUpdateStrategy
     {
+        private const int MaxQuality = 50;
+        private const int MinQuality = 0;
+
         public void Update(Item item)
         {
-            if (item.Quality < 50)
+            if (item.Quality < MaxQuality)
             {
                 item.Quality++;
-                if (item.SellIn < 11 && item.Quality < 50)
+                if (item.SellIn < 11 && item.Quality < MaxQuality)
                 {
                     item.Quality++;
                 }
-                if (item.SellIn < 6 && item.Quality < 50)
+                if (item.SellIn < 6 && item.Quality < MaxQuality)
                 {
                     item.Quality++;
                 }
@@ -59,7 +67,7 @@ namespace GildedRoseNamespace
             item.SellIn--;
             if (item.SellIn < 0)
             {
-                item.Quality = 0;
+                item.Quality = MinQuality;
             }
         }
     }
@@ -121,6 +129,5 @@ namespace GildedRoseNamespace
             }
         }
     }
-
 
 }
