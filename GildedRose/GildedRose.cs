@@ -5,6 +5,7 @@ namespace GildedRose
     public class GildedRose
     {
         private IList<Item> items;
+        private AgedUpdater agedUpdater = new AgedUpdater();
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -22,7 +23,7 @@ namespace GildedRose
         {
             if (item.Name == "Aged Brie")
             {
-                AgedUpdater.UpdateQualityForAged(item);
+                agedUpdater.UpdateItem(item);
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {

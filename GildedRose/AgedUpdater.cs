@@ -1,10 +1,10 @@
 ﻿namespace GildedRose
 {
-    internal static class AgedUpdater
+    internal class AgedUpdater : IItemUpdater
     {
         private const int MaxQuality = 50;
 
-        public static void UpdateQualityForAged(Item item)
+        public void UpdateItem(Item item)
         {
             if (item.Quality >= MaxQuality) return;
             item.Quality = item.Quality + 1;
