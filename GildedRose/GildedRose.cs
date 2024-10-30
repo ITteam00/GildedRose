@@ -27,6 +27,10 @@ namespace GildedRose
                 if (item.Quality < MaxQuality)
                 {
                     item.Quality = item.Quality + 1;
+                    if (item.SellIn < 0)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
 
                 }
             }
@@ -72,14 +76,7 @@ namespace GildedRose
 
             if (item.SellIn < 0)
             {
-                if (item.Name == "Aged Brie")
-                {
-                    if (item.Quality < MaxQuality)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-                else
+                if (item.Name != "Aged Brie")
                 {
                     if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
