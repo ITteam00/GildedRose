@@ -1,13 +1,14 @@
 ﻿using GildedRose;
 using System.Xml.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GildedRoseTest
 {
     public class GildedRoseTest
     {
         [Fact]
-        public void UpdateQuality_NormalItem_DecreasesQualityAndSellIn()
+        public void UpdateQuality_OthersItem_DecreasesQualityAndSellIn()
         {
             IList<Item> items = new List<Item> { new Item { Name = "Normal Item", SellIn = 10, Quality = 20 } };
             GildedRose.GildedRose service = new GildedRose.GildedRose(items);
@@ -66,51 +67,7 @@ namespace GildedRoseTest
             Assert.Equal(-1, items[0].SellIn);
             Assert.Equal(0, items[0].Quality);
         }
-        [Fact]
-        public void UpdateQuality_MultipleItems_MultipleUpdates()
-        {
-            IList<Item> items = new List<Item>
-            {
-                new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20 },
-                new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 },
-                new Item { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
-                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 49 },
-                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 49 }
-            };
-            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
-
-            for (int i = 0; i < 5; i++)
-            {
-                service.UpdateQuality();
-            }
-
-            Assert.Equal(5, items[0].SellIn);
-            Assert.Equal(15, items[0].Quality);
-
-            Assert.Equal(-3, items[1].SellIn);
-            Assert.Equal(8, items[1].Quality);
-
-            Assert.Equal(0, items[2].SellIn);
-            Assert.Equal(2, items[2].Quality);
-
-            Assert.Equal(0, items[3].SellIn);
-            Assert.Equal(80, items[3].Quality);
-
-            Assert.Equal(-1, items[4].SellIn);
-            Assert.Equal(80, items[4].Quality);
-
-            Assert.Equal(10, items[5].SellIn);
-            Assert.Equal(25, items[5].Quality);
-
-            Assert.Equal(5, items[6].SellIn);
-            Assert.Equal(50, items[6].Quality);
-
-            Assert.Equal(0, items[7].SellIn);
-            Assert.Equal(50, items[7].Quality);
-        }
+        
         [Fact]
         public void UpdateQuality_With_benchmark()
         {
@@ -180,10 +137,6 @@ namespace GildedRoseTest
             Assert.Equal("Backstage passes to a TAFKAL80ETC concert", items[7].Name);
             Assert.Equal(-25, items[7].SellIn);
             Assert.Equal(0, items[7].Quality);
-
-
-
         }
-
     }
 }
