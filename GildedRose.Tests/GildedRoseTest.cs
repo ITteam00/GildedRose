@@ -6,7 +6,7 @@ namespace GildedRoseTest
     public class GildedRoseTest
     {
         [Fact]
-        public void UpdateQualityTest()
+        public void UpdateQualityTest_Day1()
         {
             IList<Item> items = new List<Item>
             {
@@ -40,7 +40,34 @@ namespace GildedRoseTest
             var actualResult = items[0].Name + ", " + items[0].SellIn + ", " + items[0].Quality;
             Assert.Equal(actualResult, expectResult);
         }
-        
+
+        [Fact]
+        public void UpdateQualityTest_Day2()
+        {
+            IList<Item> items = new List<Item>
+            {
+                new Item { Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19 },
+                new Item { Name = "Aged Brie", SellIn = 1, Quality = 1 },
+                new Item { Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6 },
+                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
+                new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 },
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 14, Quality = 21 },
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 9, Quality = 50 },
+                new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 4, Quality = 50 },
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+            service.UpdateQuality();
+
+            Assert.Equal("+5 Dexterity Vest, 8, 18", $"{items[0].Name}, {items[0].SellIn}, {items[0].Quality}");
+            Assert.Equal("Aged Brie, 0, 2", $"{items[1].Name}, {items[1].SellIn}, {items[1].Quality}");
+            Assert.Equal("Elixir of the Mongoose, 3, 5", $"{items[2].Name}, {items[2].SellIn}, {items[2].Quality}");
+            Assert.Equal("Sulfuras, Hand of Ragnaros, 0, 80", $"{items[3].Name}, {items[3].SellIn}, {items[3].Quality}");
+            Assert.Equal("Sulfuras, Hand of Ragnaros, -1, 80", $"{items[4].Name}, {items[4].SellIn}, {items[4].Quality}");
+            Assert.Equal("Backstage passes to a TAFKAL80ETC concert, 13, 22", $"{items[5].Name}, {items[5].SellIn}, {items[5].Quality}");
+            Assert.Equal("Backstage passes to a TAFKAL80ETC concert, 8, 50", $"{items[6].Name}, {items[6].SellIn}, {items[6].Quality}");
+            Assert.Equal("Backstage passes to a TAFKAL80ETC concert, 3, 50", $"{items[7].Name}, {items[7].SellIn}, {items[7].Quality}");
+        }
+
         [Fact]
         public void UpdateItem_NormalItem_DecreasesQuality()
         {
@@ -58,5 +85,6 @@ namespace GildedRoseTest
             Assert.Equal(19, item.Quality);
             Assert.Equal(9, item.SellIn);
         }
+
     }
 }

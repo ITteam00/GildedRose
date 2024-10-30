@@ -5,6 +5,8 @@ namespace GildedRose
     public class GildedRose
     {
         private IList<Item> items;
+        private const int MaxQuality = 50;
+        private const int MinQuality = 0;
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -22,7 +24,7 @@ namespace GildedRose
         {
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
-                if (item.Quality > 0)
+                if (item.Quality > MinQuality)
                 {
                     if (item.Name != "Sulfuras, Hand of Ragnaros")
                     {
@@ -32,7 +34,7 @@ namespace GildedRose
             }
             else
             {
-                if (item.Quality < 50)
+                if (item.Quality < MaxQuality)
                 {
                     item.Quality = item.Quality + 1;
 
@@ -40,7 +42,7 @@ namespace GildedRose
                     {
                         if (item.SellIn < 11)
                         {
-                            if (item.Quality < 50)
+                            if (item.Quality < MaxQuality)
                             {
                                 item.Quality = item.Quality + 1;
                             }
@@ -48,7 +50,7 @@ namespace GildedRose
 
                         if (item.SellIn < 6)
                         {
-                            if (item.Quality < 50)
+                            if (item.Quality < MaxQuality)
                             {
                                 item.Quality = item.Quality + 1;
                             }
@@ -68,7 +70,7 @@ namespace GildedRose
                 {
                     if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        if (item.Quality > 0)
+                        if (item.Quality > MinQuality)
                         {
                             if (item.Name != "Sulfuras, Hand of Ragnaros")
                             {
@@ -83,7 +85,7 @@ namespace GildedRose
                 }
                 else
                 {
-                    if (item.Quality < 50)
+                    if (item.Quality < MaxQuality)
                     {
                         item.Quality = item.Quality + 1;
                     }
