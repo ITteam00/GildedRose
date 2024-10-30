@@ -28,7 +28,7 @@ namespace GildedRose
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                UpdateQualityForBackstage(item);
+                BackstageUpdater.UpdateQualityForBackstage(item);
             }
             else if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
@@ -43,28 +43,6 @@ namespace GildedRose
         }
         private static void UpdateQualityForSulfuras(Item item) {
         
-        }
-
-        private static void UpdateQualityForBackstage(Item item)
-        {
-            if (item.Quality >= MaxQuality) return;
-
-            item.Quality = item.Quality + 1;
-
-            if (item.SellIn < 11)
-            {
-                item.Quality = item.Quality + 1;
-            }
-
-            if (item.SellIn < 6)
-            {
-                item.Quality = item.Quality + 1;
-
-            }
-            if (item.SellIn < 0)
-            {
-                item.Quality = item.Quality - item.Quality;
-            }
         }
 
         private static void UpdateQualityForAged(Item item)
