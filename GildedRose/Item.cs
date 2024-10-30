@@ -1,7 +1,8 @@
 ﻿using System;
+
 namespace GildedRose
 {
-    public class Item
+    public abstract class Item
     {
         public string Name { get; set; }
         public int SellIn { get; set; }
@@ -24,6 +25,11 @@ namespace GildedRose
             {
                 Quality = 50;
             }
+        }
+
+        public virtual void UpdateSellIn()
+        {
+            SellIn = SellIn - 1;
         }
     }
 }
