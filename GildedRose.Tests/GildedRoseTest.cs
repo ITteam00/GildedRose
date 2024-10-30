@@ -135,6 +135,18 @@ namespace GildedRoseTest
             Assert.Equal(23, dummyItem.Quality);
         }
 
+        [Fact]
+        public void Should_add_quality_when_item_is_Backstage_and_item_quality_less_than_max_quality_and_SellIn_less_than_0()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = -1, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(0, dummyItem.Quality);
+        }
+
 
 
     }
