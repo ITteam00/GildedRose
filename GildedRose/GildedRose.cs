@@ -22,7 +22,15 @@ namespace GildedRose
 
         public void UpdateItem(Item item)
         {
-            if (item.Name == "Aged Brie" || item.Name == "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name == "Aged Brie" )
+            {
+                if (item.Quality < MaxQuality)
+                {
+                    item.Quality = item.Quality + 1;
+
+                }
+            }
+            else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (item.Quality < MaxQuality)
                 {

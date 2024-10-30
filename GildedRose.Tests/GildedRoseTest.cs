@@ -68,6 +68,7 @@ namespace GildedRoseTest
             Assert.Equal("Backstage passes to a TAFKAL80ETC concert, 3, 50", $"{items[7].Name}, {items[7].SellIn}, {items[7].Quality}");
         }
 
+        
         [Fact]
         public void UpdateItem_NormalItem_DecreasesQuality()
         {
@@ -84,6 +85,18 @@ namespace GildedRoseTest
 
             Assert.Equal(19, item.Quality);
             Assert.Equal(9, item.SellIn);
+        }
+
+        [Fact]
+        public void Should_add_quality_when_item_is_aged_brie_and_item_quality_less_than_max_quality()
+        {
+            IList<Item> items = new List<Item>{ };
+            Item dummyItem = new Item { Name = "Aged Brie", SellIn = 10, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(21, dummyItem.Quality);
         }
 
     }
