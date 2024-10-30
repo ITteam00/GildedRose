@@ -40,5 +40,23 @@ namespace GildedRoseTest
             var actualResult = items[0].Name + ", " + items[0].SellIn + ", " + items[0].Quality;
             Assert.Equal(actualResult, expectResult);
         }
+        
+        [Fact]
+        public void UpdateItem_NormalItem_DecreasesQuality()
+        {
+            IList<Item> items = new List<Item>
+            { new Item { Name = "Normal Item", SellIn = 10, Quality = 20 } };
+            Item item =  new Item{
+                Name = "Normal Item",
+                SellIn = 10,
+                Quality = 20
+            };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(item);
+
+            Assert.Equal(19, item.Quality);
+            Assert.Equal(9, item.SellIn);
+        }
     }
 }
