@@ -6,6 +6,8 @@ namespace GildedRose
     {
         private IList<Item> items;
         private Dictionary<string, IItemUpdater> updaters;
+        private const int MaxQuality = 50;
+
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -70,7 +72,7 @@ namespace GildedRose
         {
             public void UpdateQuality(Item item)
             {
-                if (item.Quality < 50)
+                if (item.Quality < MaxQuality)
                 {
                     item.Quality++;
                 }
@@ -83,7 +85,7 @@ namespace GildedRose
 
             public void HandleExpired(Item item)
             {
-                if (item.SellIn < 0 && item.Quality < 50)
+                if (item.SellIn < 0 && item.Quality < MaxQuality)
                 {
                     item.Quality++;
                 }
@@ -94,7 +96,7 @@ namespace GildedRose
         {
             public void UpdateQuality(Item item)
             {
-                if (item.Quality < 50)
+                if (item.Quality < MaxQuality)
                 {
                     item.Quality++;
                     IncreaseQualityIfSellInLessThan(item, 11);
@@ -104,7 +106,7 @@ namespace GildedRose
 
             private void IncreaseQualityIfSellInLessThan(Item item, int threshold)
             {
-                if (item.SellIn < threshold && item.Quality < 50)
+                if (item.SellIn < threshold && item.Quality < MaxQuality)
                 {
                     item.Quality++;
                 }

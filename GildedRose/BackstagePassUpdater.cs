@@ -2,9 +2,11 @@
 {
     public class BackstagePassUpdater : IItemUpdater
     {
+        private const int MaxQuality = 50;
+
         public void UpdateQuality(Item item)
         {
-            if (item.Quality < 50)
+            if (item.Quality < MaxQuality)
             {
                 item.Quality++;
                 IncreaseQualityIfSellInLessThan(item, 11);
@@ -14,7 +16,7 @@
 
         private void IncreaseQualityIfSellInLessThan(Item item, int threshold)
         {
-            if (item.SellIn < threshold && item.Quality < 50)
+            if (item.SellIn < threshold && item.Quality < MaxQuality)
             {
                 item.Quality++;
             }

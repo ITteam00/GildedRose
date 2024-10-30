@@ -5,17 +5,19 @@ namespace GildedRose
 {
     public class GildedRoseProgram
     {
+        private const int TotalDays = 31;
         public static void Main(string[] args)
         {
+
             Console.WriteLine("OMGHAI!");
 
             IList<Item> items = ItemsData.GetItems();
 
             var app = new GildedRose(items);
 
-            for (var i = 0; i < 31; i++)
+            for (var currentDay = 0; currentDay < TotalDays; currentDay++)
             {
-                Console.WriteLine("-------- day " + i + " --------");
+                Console.WriteLine("-------- day " + currentDay + " --------");
                 Console.WriteLine("name, sellIn, quality");
                 foreach (var item in items)
                 {
