@@ -183,6 +183,31 @@ namespace GildedRoseTest
             Assert.Equal(18, dummyItem.Quality);
         }
 
+        [Fact]
+        public void Should_reduce_SellIn_when_item_is_Elixir()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Elixir of the Mongoose", SellIn = 3, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(2, dummyItem.SellIn);
+        }
+
+
+        [Fact]
+        public void Should_keep_SellIn_when_item_is_Sulfuras()
+        {
+            IList<Item> items = new List<Item> { };
+            Item dummyItem = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 3, Quality = 20 };
+            GildedRose.GildedRose service = new GildedRose.GildedRose(items);
+
+            service.UpdateItem(dummyItem);
+
+            Assert.Equal(3, dummyItem.SellIn);
+        }
+
 
     }
 }
