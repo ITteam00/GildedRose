@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GildedRose
+namespace GildedRoseNamespace
 {
     public class GildedRose
     {
@@ -8,6 +8,25 @@ namespace GildedRose
         public GildedRose(IList<Item> items)
         {
             this.items = items;
+        }
+
+        public string GetFormattedText(IList<Item> items)
+        {
+            List<string> outputStrArray = ["OMGHAI!"];
+
+            for (var i = 0; i < 31; i++)
+            {
+                outputStrArray.Add("-------- day " + i + " --------");
+                outputStrArray.Add("name, sellIn, quality");
+                for (var j = 0; j < items.Count; j++)
+                {
+                    outputStrArray.Add(items[j].Name + ", " + items[j].SellIn + ", " + items[j].Quality);
+                }
+                outputStrArray.Add(string.Empty);
+                UpdateQuality();
+            }
+            string outputStr = string.Join("\n", outputStrArray).Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
+            return outputStr;
         }
 
         public void UpdateQuality()

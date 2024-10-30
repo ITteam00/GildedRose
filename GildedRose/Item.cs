@@ -1,5 +1,5 @@
 ﻿using System;
-namespace GildedRose
+namespace GildedRoseNamespace
 {
     public class Item
     {
