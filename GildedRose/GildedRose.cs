@@ -5,8 +5,6 @@ namespace GildedRose
     public class GildedRose
     {
         private IList<Item> items;
-        private const int MaxQuality = 50;
-        private const int MinQuality = 0;
         public GildedRose(IList<Item> items)
         {
             this.items = items;
@@ -24,7 +22,7 @@ namespace GildedRose
         {
             if (item.Name == "Aged Brie")
             {
-                UpdateQualityForAged(item);
+                AgedUpdater.UpdateQualityForAged(item);
             }
             else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
@@ -43,16 +41,6 @@ namespace GildedRose
         }
         private static void UpdateQualityForSulfuras(Item item) {
         
-        }
-
-        private static void UpdateQualityForAged(Item item)
-        {
-            if (item.Quality >= MaxQuality) return;
-            item.Quality = item.Quality + 1;
-
-            if (item.SellIn >= 0) return;
-            item.Quality = item.Quality + 1;
-
         }
 
         private static void DecreaseSellIn(Item item)
