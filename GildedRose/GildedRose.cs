@@ -36,22 +36,13 @@ namespace GildedRose
             }
             else
             {
-                UpdateQualityForOtherItem(item);
+                OtherItemUpdater.UpdateQualityForOtherItem(item);
             }
             DecreaseSellIn(item);
 
         }
         private static void UpdateQualityForSulfuras(Item item) {
         
-        }
-        private static void UpdateQualityForOtherItem(Item item)
-        {
-            if (item.Quality <= MinQuality) return;
-            item.Quality = item.Quality - 1;
-            if (item.SellIn < 0)
-            {
-                item.Quality = item.Quality - 1;
-            }
         }
 
         private static void UpdateQualityForBackstage(Item item)
