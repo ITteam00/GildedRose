@@ -5,12 +5,13 @@ namespace GildedRose
     public class GildedRose
     {
         private IList<Item> items;
-        private AgedUpdater agedUpdater = new AgedUpdater();
-        private BackstageUpdater backstageUpdater = new BackstageUpdater();
-        private SulfurasUpdater sulfurasUpdater =new SulfurasUpdater();
+        private Dictionary<string, IItemUpdater> updaters = new Dictionary<string, IItemUpdater>(); 
         private OtherItemUpdater otherItemUpdater = new OtherItemUpdater();
         public GildedRose(IList<Item> items)
         {
+            this.updaters.Add("Aged Brie", new AgedUpdater());
+            this.updaters.Add("Backstage passes to a TAFKAL80ETC concert", new BackstageUpdater());
+            this.updaters.Add("Sulfuras, Hand of Ragnaros", new SulfurasUpdater());
             this.items = items;
         }
 
@@ -24,22 +25,8 @@ namespace GildedRose
 
         public void UpdateItem(Item item)
         {
-            if (item.Name == "Aged Brie")
-            {
-                agedUpdater.UpdateItem(item);
-            }
-            else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-            {
-                backstageUpdater.UpdateItem(item);
-            }
-            else if (item.Name == "Sulfuras, Hand of Ragnaros")
-            {
-                sulfurasUpdater.UpdateItem(item);
-            }
-            else
-            {
-                otherItemUpdater.UpdateItem(item);
-            }
+            var updater = updaters.GetValueOrDefault(item.Name, this.otherItemUpdater);
+            updater.UpdateItem(item);
             DecreaseSellIn(item);
 
         }
