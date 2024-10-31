@@ -24,4 +24,10 @@
     <ProjectReference Include="..\GildedRose\GildedRose.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="sample.approved.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
